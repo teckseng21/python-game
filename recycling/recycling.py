@@ -5,7 +5,7 @@ WIDTH=800
 HEIGHT=600
 centrex=WIDTH/2
 centrey=HEIGHT/2
-centre=(centrex,centrey)
+CENTRE=(centrex,centrey)
 
 final_level=6
 start_speed=10
@@ -34,8 +34,9 @@ def update():
         items=make_items(current_level)
 
 def display_message(heading_text,sub_heading_text):
-    screen.draw.text(heading_text,fontsize=60,centre=CENTRE,color="white")
-    screen.draw.text(sub_heading_text,fontsize=30,centre=(centrex,centrey+30),color="white")
+    screen.draw.text(heading_text,fontsize=60,center=CENTRE,color="white")
+    screen.draw.text(sub_heading_text,fontsize=30,center=(centrex,centrey+30),color="white")
+
 
 
 def create_items(items_to_create):
@@ -48,11 +49,60 @@ def create_items(items_to_create):
 def make_items(number_of_extra_items):
     items_to_create=get_option_to_create(number_of_extra_items)
     new_items=create_items(items_to_create)
+    layout_items(new_items)
+    animate_items(new_items)
     return new_items
+
+
+
 def get_option_to_create(number_of_extra_items):
     items_to_create=["paperbag"]
     for i in range(0,number_of_extra_items):
         random_option=random.choice(ITEMS)
         items_to_create.append(random_option)
     return items_to_create
+
+def layout_items(items_to_layout):
+    number_of_gaps=len(items_to_layout)+1
+    gap_size=WIDTH/number_of_gaps
+    random.shuffle(items_to_layout)
+    for index,item in enumerate(items_to_layout):
+        new_x_pos=(index+1)*gap_size
+        item.x=new_x_pos
+
+def animate_items(items_to_animate):
+    global animations
+    for item in items_to_animate:
+        duration=start_speed-current_level
+        item.anchor=("center","bottom")
+        animation=animate(item,duration=duration,on_finished=handle_game_over,y=HEIGHT)
+        animations.append(animation)
+def stop_animations(animations_to_stop):
+    for animation in animations_to_stop:
+        if animation.running:
+            animation.stop()
+
+def handle_game_over():
+    global game_over
+    game_over=True
+
+def handle_game_complete():
+    global game_complete,current_level,items,animations
+    stop_animations(animations)
+    if current_level==final_level:
+        game_complete=True
+    else:
+        current_level=current_level+1
+        items=[]
+        animations=[]
+
+def on_mouse_down(pos):
+    global items,current_level
+    for item in items:
+        if item.collidepoint(pos):
+            if "paperbag"in item.image:
+                handle_game_complete()
+            else:
+                handle_game_over()
+
 pgzrun.go()
