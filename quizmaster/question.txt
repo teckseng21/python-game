@@ -1,2 +1,5 @@
 Heat or thermal energy can be transferred in different ways. How is heat moved in a liquid?,Convection,Evaporation,Conduction,Radiation,1
 Which is the tallest mountain in the world?,Mount Kilimanjaro,Mount Denali,Mount Fuji,Mount Everest,4
+What is the capital of Australia?,London,canberra,Melbourne,Tokyo,2
+Which part of the body continues to grow for your entire life?,Brain,Teeth,Nose,Eyes,3
+Where is the Stonehenge?,New zealand, England,scottland,Canada,2
