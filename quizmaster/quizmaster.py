@@ -19,7 +19,7 @@ skip_box=Rect(0,0,150,330)
 score=0
 time_left=10
 
-question_file_name="question.txt"
+question_file_name="quizmaster/question.txt"
 
 answer_boxes=[answer_box1,answer_box2,answer_box3,answer_box4]
 questions=[]
