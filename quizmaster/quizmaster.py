@@ -72,6 +72,7 @@ def read_question_file():
     for question in q_file:
         questions.append(question)
         question_count=question_count+1
+    print (question_count)
     q_file.close()
 
 def read_next_question():
