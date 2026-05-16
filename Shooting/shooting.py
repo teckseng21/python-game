@@ -6,7 +6,7 @@ HEIGHT=600
 
 ship=Actor('ship')
 bug=Actor('bug')
-
+Alien=Actor('alien')
 ship.pos=(WIDTH//2,HEIGHT-60)
 speed=5
 enemies=[]
@@ -14,6 +14,7 @@ score=0
 direction=1
 bullets=[]
 game_over=False
+bullet_timer=0
 
 def display_score():
     screen.draw.text(str(score),(50,30))
@@ -21,6 +22,7 @@ def display_score():
 
 for i in range(8):
     enemies.append(Actor('bug'))
+    enemies.append(Actor('alien'))
     enemies[-1].x=100+90*i
     enemies[-1].y=80
 
@@ -40,8 +42,9 @@ def draw():
 
 def update():
     move_down=False
-    global score,direction,game_over
+    global score,direction,game_over,bullet_timer
     
+    bullet_timer=bullet_timer+1
     for bullet in bullets:
         if bullet.y<=0:
             bullets.remove(bullet)
@@ -70,11 +73,12 @@ def update():
         if ship.y<0:
             ship.y=0
     
-    if keyboard.space:
+    if keyboard.space and bullet_timer>15:
         print ("Pressing space")
         bullets.append(Actor('bullet'))
         bullets[-1].x=ship.x
         bullets[-1].y=ship.y
+        bullet_timer=0
 
     if len(enemies)==0:
         game_over=True
