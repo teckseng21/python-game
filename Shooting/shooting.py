@@ -33,10 +33,21 @@ def draw():
     display_score()
     ship.draw()
 
+
+        
+
 def update():
     move_down=False
     global score,direction
     
+    for bullet in bullets:
+        if bullet.y<=0:
+            bullets.remove(bullet)
+        else:
+            bullet.y=bullet.y-10
+
+    
+
     if keyboard.a:
         ship.x=ship.x-speed
         if ship.x<0:
@@ -68,9 +79,19 @@ def update():
         move_down=True
         direction=direction*-1
     for enemy in enemies:
-        enemy.x=enemy.x+5*direction
-        if move_down==True:
-            enemy.y=enemy.y+50
+        enemy.y=enemy.y+2
+        if enemy.y>=HEIGHT:
+            enemy.y=-100
+            enemy.x=random.randint(50,WIDTH-50)
+        for bullet in bullets:
+            if enemy.colliderect(bullet):
+                score=score+100
+                enemies.remove(enemy)
+                bullets.remove(bullet)
+        #enemy.x=enemy.x+5*direction
+        #if move_down==True:
+            #enemy.y=enemy.y+50
+        
    
 
 
