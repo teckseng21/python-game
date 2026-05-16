@@ -13,6 +13,7 @@ enemies=[]
 score=0
 direction=1
 bullets=[]
+game_over=False
 
 def display_score():
     screen.draw.text(str(score),(50,30))
@@ -32,13 +33,14 @@ def draw():
         bullet.draw()
     display_score()
     ship.draw()
-
+    if game_over:
+        screen.draw.text("Game Over",(WIDTH//2-100,HEIGHT//2),color=(255,0,0),fontsize=60)
 
         
 
 def update():
     move_down=False
-    global score,direction
+    global score,direction,game_over
     
     for bullet in bullets:
         if bullet.y<=0:
@@ -74,7 +76,12 @@ def update():
         bullets[-1].x=ship.x
         bullets[-1].y=ship.y
 
+    if len(enemies)==0:
+        game_over=True
         
+    if game_over:
+        return
+
     if len(enemies)>0 and (enemies[-1].x>WIDTH-80 or enemies[0].x<80):
         move_down=True
         direction=direction*-1
